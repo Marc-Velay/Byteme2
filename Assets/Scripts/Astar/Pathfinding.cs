@@ -34,48 +34,54 @@ public class Pathfinding : MonoBehaviour
         List<Node> openSet = new List<Node>();
         HashSet<Node> closedSet = new HashSet<Node>();
         openSet.Add(startNode);
+        int temporisation = 0;
 
         while (openSet.Count > 0)
         {
-            Node currentNode = openSet[0];
-            for (int i = 1; i < openSet.Count; i++)
+            if(temporisation%30==0)
             {
-                if (openSet[i].fCost < currentNode.fCost || openSet[i].fCost == currentNode.fCost && openSet[i].hCost < currentNode.hCost)
+                Node currentNode = openSet[0];
+                for (int i = 1; i < openSet.Count; i++)
                 {
-                    currentNode = openSet[i];
-                }
-            }
-
-            openSet.Remove(currentNode);
-            closedSet.Add(currentNode);
-
-            if (currentNode == targetNode)
-            {
-                sw.Stop();
-                print("Path found: " + sw.ElapsedMilliseconds + "ms");
-
-                RetracePath(startNode, targetNode);
-                return;
-            }
-
-            foreach (Node neighbour in grid.GetNeighbours(currentNode))
-            {
-                if (!neighbour.walkable || closedSet.Contains(neighbour))
-                {
-                    continue;
+                    if (openSet[i].fCost < currentNode.fCost || openSet[i].fCost == currentNode.fCost && openSet[i].hCost < currentNode.hCost)
+                    {
+                        currentNode = openSet[i];
+                    }
                 }
 
-                int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour);
-                if (newMovementCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
-                {
-                    neighbour.gCost = newMovementCostToNeighbour;
-                    neighbour.hCost = GetDistance(neighbour, targetNode);
-                    neighbour.parent = currentNode;
+                openSet.Remove(currentNode);
+                closedSet.Add(currentNode);
 
-                    if (!openSet.Contains(neighbour))
-                        openSet.Add(neighbour);
+                if (currentNode == targetNode)
+                {
+                    sw.Stop();
+                    //print("Path found: " + sw.ElapsedMilliseconds + "ms");
+
+                    RetracePath(startNode, targetNode);
+                    return;
                 }
+
+                foreach (Node neighbour in grid.GetNeighbours(currentNode))
+                {
+                    if (!neighbour.walkable || closedSet.Contains(neighbour))
+                    {
+                        continue;
+                    }
+
+                    int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour);
+                    if (newMovementCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
+                    {
+                        neighbour.gCost = newMovementCostToNeighbour;
+                        neighbour.hCost = GetDistance(neighbour, targetNode);
+                        neighbour.parent = currentNode;
+
+                        if (!openSet.Contains(neighbour))
+                            openSet.Add(neighbour);
+                    }
+                }
+                temporisation = 0;
             }
+            temporisation++;
         }
     }
 

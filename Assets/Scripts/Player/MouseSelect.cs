@@ -23,15 +23,15 @@ using System.Collections.Generic;
     }
 
     private void SelectTarget() {
-        selectedTarget.GetComponent<Renderer>().material.color = Color.red;
-        Debug.Log("selected", selectedTarget);
+        //selectedTarget.GetComponent<Renderer>().material.color = Color.red;
+        print("selected" + selectedTarget.name);
         //PlayerAttack pa = (PlayerAttack)GetComponent("PlayerAttack");
         //pa.target = selectedTarget.gameObject;
     }
 
     private void DeselectTarget() { if (selectedTarget) {
             // if any guy selected, deselect it 
-            selectedTarget.GetComponent<Renderer>().material.color = Color.blue;
+            //selectedTarget.GetComponent<Renderer>().material.color = Color.blue;
             selectedTarget = null;
         }
     }
