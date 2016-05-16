@@ -87,6 +87,7 @@
     <Compile Include="Assets\Scripts\Astar\Heap.cs" />
     <Compile Include="Assets\Scripts\Astar\NodeObj.cs" />
     <Compile Include="Assets\Scripts\Astar\Pathfinding.cs" />
+    <Compile Include="Assets\Scripts\Enemy\SelectableUnitComponent.cs" />
     <Compile Include="Assets\Scripts\Player\MouseSelect.cs" />
     <Compile Include="Assets\Scripts\Player\Movement.cs" />
     <Compile Include="Assets\_CompletedAssets\MobileInput\Scripts\CrossPlatformInputManager.cs" />
@@ -125,6 +126,8 @@
     <None Include="Assets\Maps\Lava\ReadMe.txt" />
     <None Include="Assets\Maps\Lava\Shaders\Unlit_Lava_Distort.shader" />
     <None Include="Assets\Maps\Lava\Shaders\Unlit_Lava_Simple.shader" />
+    <None Include="Assets\Projector\ProjectorAdditiveTint 1.shader" />
+    <None Include="Assets\Projector\ProjectorAdditiveTint.shader" />
     <None Include="Assets\Standard Assets\Cameras\CameraGuidelines.txt" />
     <None Include="Assets\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />
     <None Include="Assets\Standard Assets\Characters\RollerBall\RollerBallGuidelines.txt" />

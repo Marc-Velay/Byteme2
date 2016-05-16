@@ -6,6 +6,7 @@ using System.Collections.Generic;
 {
 
     public Transform selectedTarget;
+    public GameObject selectionCirclePrefab;
 
     void Update()
     {
@@ -22,17 +23,54 @@ using System.Collections.Generic;
         }
     }
 
-    private void SelectTarget() {
-        //selectedTarget.GetComponent<Renderer>().material.color = Color.red;
-        print("selected" + selectedTarget.name);
-        //PlayerAttack pa = (PlayerAttack)GetComponent("PlayerAttack");
-        //pa.target = selectedTarget.gameObject;
+    private void SelectTarget()
+    {
+
+        foreach (var selectableObject in FindObjectsOfType<SelectableUnitComponent>())
+        {
+            print("test1");
+            if (selectableObject.gameObject == selectedTarget.gameObject)
+            {
+                print("test2");
+                if (selectableObject.selectionCircle == null)
+                {
+                    selectableObject.selectionCircle = Instantiate(selectionCirclePrefab);
+                    selectableObject.selectionCircle.transform.SetParent(selectableObject.transform, false);
+                    selectableObject.selectionCircle.transform.eulerAngles = new Vector3(90, 0, 0);
+                    print("selected" + selectedTarget.name);
+                }
+            }
+            /*else
+            {
+                if (selectableObject.selectionCircle != null)
+                {
+                    Destroy(selectableObject.selectionCircle.gameObject);
+                    selectableObject.selectionCircle = null;
+                }
+            }*/
+        }
+        
     }
 
-    private void DeselectTarget() { if (selectedTarget) {
-            // if any guy selected, deselect it 
-            //selectedTarget.GetComponent<Renderer>().material.color = Color.blue;
-            selectedTarget = null;
+    private void DeselectTarget() {
+        if(selectedTarget)
+        {
+            foreach (var selectableObject in FindObjectsOfType<SelectableUnitComponent>())
+            {
+                if(selectedTarget != null && selectableObject != null)
+                {
+                    if (selectableObject.gameObject == selectedTarget.gameObject)
+                    {
+                        // if any guy selected, deselect it 
+
+                        print("unselected" + selectedTarget.name);
+                        Destroy(selectableObject.selectionCircle.gameObject);
+                        selectableObject.selectionCircle = null;
+                        selectedTarget = null;
+                    }
+                }             
+            }
         }
+        
     }
 }
