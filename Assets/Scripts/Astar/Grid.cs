@@ -78,16 +78,64 @@ public class Grid : MonoBehaviour
     }
 
     public List <Node> path;
-    void OnDrawGizmos()
+
+    void DestroyGrid()
     {
-        Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
+        var objs = GameObject.FindGameObjectsWithTag("AstarCircle");
+        foreach(var Sph in objs)
+        {
+            Destroy(Sph);
+        }
+    }
+
+    void Update()
+    {
+        
+        if (grid != null)
+        {
+            DestroyGrid();
+            foreach (Node n in grid)
+            {
+                //prépare les endroits walkable en blanc et unwalkable en rouge   
+                //Gizmos.color = (n.walkable) ? Color.white : Color.red;
+
+                
+                //il y a un plus court chemin
+                if (path != null)
+                {
+                    //le chemin contient le noeud courant (= la case contient un bout de chemin)
+                    if (path.Contains(n))
+                    {
+                        if (dirCount % 2 == 0)
+                        {
+                            //donne un "style" à la portion de chemin
+                            Gizmos.color = Color.blue;
+                            //Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - .1f));
+                            // Gizmos.DrawSphere(n.worldPosition, 1);
+                             GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                             sphere.transform.position = new Vector3(0, 0, 0);
+                             sphere.transform.position = n.worldPosition;
+                             sphere.tag = "AstarCircle";
+                        }
+                        dirCount++;
+
+
+                    }
+                }
+            }
+            dirCount = 0;
+        }
+    }
+    /*void OnDrawGizmos()
+    {
+        //Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
 
         if (grid != null)
         {
             foreach (Node n in grid)
             {
                 //prépare les endroits walkable en blanc et unwalkable en rouge   
-                Gizmos.color = (n.walkable) ? Color.white : Color.red;
+                //Gizmos.color = (n.walkable) ? Color.white : Color.red;
 
 
                 //il y a un plus court chemin
@@ -101,20 +149,24 @@ public class Grid : MonoBehaviour
                             //donne un "style" à la portion de chemin
                             Gizmos.color = Color.blue;
                             //Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - .1f));
-                            Gizmos.DrawSphere(n.worldPosition, 1);
+                            // Gizmos.DrawSphere(n.worldPosition, 1);
+                            GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                            sphere.transform.position = new Vector3(0, 0, 0);
+                            sphere.transform.position = n.worldPosition;
+                            sphere.tag = "AstarCircle";
                         }
                         dirCount++;
                         
 
                     }
-                    else {
+                    //else {
 
                         //dessine les cases de la map 
                        // Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - .1f));
-                    }
+                    //}
                 }
             }
             dirCount = 0;
         }
-    }
+    }*/
 }

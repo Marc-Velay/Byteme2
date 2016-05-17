@@ -38,7 +38,7 @@ public class Pathfinding : MonoBehaviour
 
         while (openSet.Count > 0)
         {
-            if(temporisation%30==0)
+            if(temporisation%10==0)
             {
                 Node currentNode = openSet[0];
                 for (int i = 1; i < openSet.Count; i++)
