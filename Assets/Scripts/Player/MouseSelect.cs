@@ -64,7 +64,10 @@ using System.Collections.Generic;
                         // if any guy selected, deselect it 
 
                         print("unselected" + selectedTarget.name);
-                        Destroy(selectableObject.selectionCircle.gameObject);
+                        if(selectableObject.selectionCircle.gameObject != null)
+                        {
+                            Destroy(selectableObject.selectionCircle.gameObject);
+                        }                        
                         selectableObject.selectionCircle = null;
                         selectedTarget = null;
                     }
